@@ -1,45 +1,53 @@
-#include "RandomBuySellStrategy.hpp"
+#include "../include/RandomBuySellStrategy.h"
+#include "Trade.h"
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
 #include <random>
 
+using namespace std;
+using Move = Trade::Move;
+
 Trade RandomBuySellStrategy::processTick(Tick tick) {
 
-  static std::random_device rd;
-  static std::mt19937 mt(rd());
+  // static random_device rd;
+  // static mt19937 mt(rd());
+
+  static seed_seq seed{43};
+  static mt19937 mt(seed);
   int randomMove;
-  int max = 3;
-  int min = 1;
+
   int quantity = 10;
-  Trade::move mv;
+  Trade::Move mv;
+
   // srand((unsigned int)time(NULL));
   // randomMove = min + (rand() % static_cast<int>(max - min + 1));
-  std::uniform_int_distribution<int> dist(1, 3);
+
+  uniform_int_distribution<int> dist(1, 3);
   randomMove = dist(mt);
 
   if (randomMove == 1) {
-    mv = Trade::BUY;
+    mv = Move::BUY;
     if (DEBUG_FLAG) {
-      std::cout << "RandomBuySellStrategy: BUY SIGNAL generated" << std::endl;
+      cout << "RandomBuySellStrategy: BUY SIGNAL generated" << endl;
     }
   }
 
   if (randomMove == 2) {
-    mv = Trade::SELL;
+    mv = Move::SELL;
     if (DEBUG_FLAG) {
-      std::cout << "RandomBuySellStrategy: SELL SIGNAL generated" << std::endl;
+      cout << "RandomBuySellStrategy: SELL SIGNAL generated" << endl;
     }
   }
 
   if (randomMove == 3) {
-    mv = Trade::PASS;
+    mv = Move::PASS;
     if (DEBUG_FLAG) {
-      std::cout << "RandomBuySellStrategy: PASS SIGNAL generated" << std::endl;
+      cout << "RandomBuySellStrategy: PASS SIGNAL generated" << endl;
     }
   }
 
-  // mv = Trade::BUY;
+  // mv = Move::BUY;
 
   return Trade(mv, quantity, tick);
 }
