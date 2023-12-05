@@ -1,35 +1,16 @@
-CC := g++ # This is the main compiler
-# CC := clang --analyze # and comment out the linker last line for sanity
-SRCDIR := src
-BUILDDIR := build
-TARGET := bin/aku
+all: main
 
-SRCEXT := cpp
-SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
-OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-CFLAGS := -g -DDEBUG_FLAG=1# -Wall
-LIB :=
-INC := -I include
+CXX = clang++
+override CXXFLAGS += -g -Wmost -Werror -I include -DDEBUG_FLAG=0
 
-$(TARGET): $(OBJECTS)
-	@echo " Linking..."
-	@mkdir bin
-	@echo " $(CC) $^ -o $(TARGET) $(LIB)"; $(CC) $^ -o $(TARGET) $(LIB)
+SRCS = $(shell find . -name '.ccls-cache' -type d -prune -o -type f -name '*.cpp' -print | sed -e 's/ /\\ /g')
+HEADERS = $(shell find . -name '.ccls-cache' -type d -prune -o -type f -name '*.h' -print)
 
-$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
-	@mkdir -p $(BUILDDIR)
-	@echo " $(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
+main: $(SRCS) $(HEADERS)
+	$(CXX) $(CXXFLAGS) $(SRCS) -o "$@"
+
+main-debug: $(SRCS) $(HEADERS)
+	NIX_HARDENING_ENABLE= $(CXX) $(CXXFLAGS) -O0  $(SRCS) -o "$@"
 
 clean:
-	@echo " Cleaning..."; 
-	@echo " $(RM) -r $(BUILDDIR) $(TARGET)"; $(RM) -r $(BUILDDIR) $(TARGET)
-
-# Tests
-tester:
-	$(CC) $(CFLAGS) test/tester.cpp $(INC) $(LIB) -o bin/tester
-
-# Spikes
-ticket:
-	$(CC) $(CFLAGS) spikes/ticket.cpp $(INC) $(LIB) -o bin/ticket
-
-.PHONY: clean
+	rm -f main main-debug
