@@ -1,21 +1,21 @@
+#include "../include/CurrencyConversions.h"
 #include <algorithm>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
 
-#include "CurrencyConversions.hpp"
+using namespace std;
 
-void CurrencyConversions::removeCommasfromCurrency(std::string &str) {
-  str.erase(std::remove(str.begin(), str.end(), ','), str.end());
+void CurrencyConversions::removeCommasFromCurrency(string &str) {
+  str.erase(remove(str.begin(), str.end(), ','), str.end());
 }
 
-long double CurrencyConversions::stodpre(std::string const &str,
-                                         std::size_t const p) {
-  std::stringstream sstrm;
-  sstrm << std::setprecision(p) << std::fixed << str << std::endl;
+REAL CurrencyConversions::readWithPrecision(string const &str, size_t const p) {
+  stringstream sstream;
+  sstream << setprecision(p) << fixed << str << endl;
 
-  long double d;
-  sstrm >> d;
+  REAL d;
+  sstream >> d;
 
   return d;
 }

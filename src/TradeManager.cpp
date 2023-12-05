@@ -1,11 +1,16 @@
-#include "TradeManager.hpp"
+#include "../include/TradeManager.h"
+#include "../include/Trade.h"
 #include <iostream>
 
+using namespace std;
+
+using Move = Trade::Move;
+
 int TradeManager::performTrade(Trade trade) {
-  if (trade.mv == Trade::BUY) {
+  if (trade.mv == Move::BUY) {
     this->performBuyInternal(trade);
   }
-  if (trade.mv == Trade::SELL) {
+  if (trade.mv == Move::SELL) {
     this->performSellInternal(trade);
   }
 
@@ -13,13 +18,11 @@ int TradeManager::performTrade(Trade trade) {
 }
 
 int TradeManager::performBuyInternal(Trade trade) {
-
   if (this->canBuy(trade)) {
-
     if (DEBUG_FLAG) {
-      std::string trade_log = "Bought - " + std::to_string(trade.quantity) +
-                              " at " + std::to_string(trade.tick.close) +
-                              " on " + std::to_string(trade.tick.time);
+      string trade_log = "Bought - " + to_string(trade.quantity) + " at " +
+                         to_string(trade.tick.close) + " on " +
+                         to_string(trade.tick.time);
     }
 
     this->trades.push_back(trade);
@@ -32,13 +35,11 @@ int TradeManager::performBuyInternal(Trade trade) {
 }
 
 int TradeManager::performSellInternal(Trade trade) {
-
   if (this->canSell(trade)) {
-
     if (DEBUG_FLAG) {
-      std::string trade_log = "Sold - " + std::to_string(trade.quantity) +
-                              " at " + std::to_string(trade.tick.close) +
-                              " on " + std::to_string(trade.tick.time);
+      string trade_log = "Sold - " + to_string(trade.quantity) + " at " +
+                         to_string(trade.tick.close) + " on " +
+                         to_string(trade.tick.time);
     }
 
     this->trades.push_back(trade);
@@ -50,12 +51,13 @@ int TradeManager::performSellInternal(Trade trade) {
   return 0;
 }
 
-int TradeManager::dumpTrades() {
-  std::cout << "Printing all the trades" << std::endl;
-  std::cout << std::endl;
+void TradeManager::dumpTrades() {
+  cout << "Printing all the trades" << endl;
+  cout << endl;
+
   for (auto trade : this->trades) {
     trade.dump();
-    std::cout << std::endl;
+    cout << endl;
   }
-  std::cout << std::endl;
+  cout << endl;
 }

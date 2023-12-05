@@ -1,23 +1,22 @@
-#include "PaperTradeManager.hpp"
+#include "../include/PaperTradeManager.h"
+#include "../include/Trade.h"
 #include <iostream>
 
-/*PaperTradeManager::PaperTradeManager(VirtualBank * bank){
-        this->virutal_bank
-}*/
+using namespace std;
 
 PaperTradeManager::PaperTradeManager(VirtualBank *v_bank) {
   this->virtual_bank = v_bank;
   this->holdQuantity = 0;
 }
 
-int PaperTradeManager::performBuy(Trade trade) {
-  std::cout << "Paper trade buy" << std::endl;
+void PaperTradeManager::performBuy(Trade trade) {
+  cout << "Paper trade buy" << endl;
   this->virtual_bank->bankDebit(trade.quantity * trade.tick.close);
   this->holdQuantity += trade.quantity;
 }
 
-int PaperTradeManager::performSell(Trade trade) {
-  std::cout << "Paper trade sell" << std::endl;
+void PaperTradeManager::performSell(Trade trade) {
+  cout << "Paper trade sell" << endl;
   this->virtual_bank->bankCredit(trade.quantity * trade.tick.close);
   this->holdQuantity -= trade.quantity;
 }
@@ -28,8 +27,8 @@ bool PaperTradeManager::canBuy(Trade trade) {
   }
 
   if (DEBUG_FLAG) {
-    std::cout << "Could not perform a BUY signal, probably insufficient funds!"
-              << std::endl;
+    cout << "Could not perform a BUY signal, probably insufficient funds!"
+         << endl;
   }
 
   return false;
@@ -41,18 +40,17 @@ bool PaperTradeManager::canSell(Trade trade) {
   }
 
   if (DEBUG_FLAG) {
-    std::cout
-        << "Could not perform a SELL signal, you cant sell what you dont have"
-        << std::endl;
+    cout << "Could not perform a SELL signal, you cant sell what you dont have"
+         << endl;
   }
 
   return false;
 }
 
 bool PaperTradeManager::squareOff(Tick last_tick) {
-
+  using Move = Trade::Move;
   if (this->holdQuantity > 0) {
-    Trade squareoff_trade(Trade::SELL, this->holdQuantity, last_tick);
+    Trade squareoff_trade(Move::SELL, this->holdQuantity, last_tick);
     this->performTrade(squareoff_trade);
   }
   return false;

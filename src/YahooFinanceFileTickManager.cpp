@@ -4,95 +4,84 @@
 #include <sstream>
 #include <vector>
 
-#include "CurrencyConversions.hpp"
-#include "YahooFinanceFileTickManager.hpp"
+// Note: remove method:  Tick getNextTick(Tick last_tick);
 
-YahooFinanceFileTickManager::YahooFinanceFileTickManager(
-    std::string file_path) {
+using namespace std;
 
+#include "../include/CurrencyConversions.h"
+#include "../include/YahooFinanceFileTickManager.h"
+
+YahooFinanceFileTickManager::YahooFinanceFileTickManager(string file_path) {
   if (DEBUG_FLAG) {
-    std::cout
-        << "Running with YahooFinanceFileTickManager as default TickManager"
-        << std::endl;
+    cout << "Running with YahooFinanceFileTickManager as default TickManager"
+         << endl;
   }
-
-  std::ifstream input_file(file_path);
+  ifstream input_file(file_path);
   int first_line = 0;
-  for (std::string line; std::getline(input_file, line);) {
-
+  for (string line; getline(input_file, line);) {
     // ignore first line as it contains table headings
     if (first_line == 0) {
       first_line++;
       continue;
     }
-
     // Yahoo finance have null candles , ignore them.
-    if (line.find("null") != std::string::npos) {
-
+    if (line.find("null") != string::npos) {
       if (DEBUG_FLAG) {
-        std::cout << "Null candle found, ignoring line - " << line << std::endl;
+        cout << "Null candle found, ignoring line - " << line << endl;
       }
-
       continue;
     }
 
     if (DEBUG_FLAG) {
-      std::cout << "Trying to parse line - " << line << std::endl;
+      cout << "Trying to parse line - " << line << endl;
     }
 
-    this->tick_store.push_back(parseTickfromString(line));
+    this->tick_store.push_back(parseTickFromString(line));
   }
 }
 
-long int YahooFinanceFileTickManager::parseDatefromString(std::string line) {
-  int date;
-  line.erase(std::remove(line.begin(), line.end(), '-'), line.end());
-  return std::stol(line);
+INT YahooFinanceFileTickManager::parseDateFromString(string line) {
+  // int date;
+  line.erase(remove(line.begin(), line.end(), '-'), line.end());
+  return stol(line);
 }
 
-Tick YahooFinanceFileTickManager::parseTickfromString(std::string line) {
-
+Tick YahooFinanceFileTickManager::parseTickFromString(string line) {
   Tick parsed_tick;
-  std::vector<std::string> tokens;
-  std::stringstream string_stream(line);
-  std::string token;
-  int col = 0; // will keep a check on csv coloumns
+  vector<string> tokens;
+  stringstream string_stream(line);
+  string token;
+  int col = 0; // will keep a check on csv columns
 
-  while (std::getline(string_stream, token, ',')) {
+  while (getline(string_stream, token, ',')) {
 
     if (col == 0) {
-      // coloumn 0 is date
-      parsed_tick.time = parseDatefromString(token);
-
+      // column 0 is date
+      parsed_tick.time = parseDateFromString(token);
     } else if (col == 1) {
       // col 1 is opening price
-      CurrencyConversions::removeCommasfromCurrency(token);
-      parsed_tick.open = std::stold(token);
-
+      CurrencyConversions::removeCommasFromCurrency(token);
+      parsed_tick.open = stold(token);
     } else if (col == 2) {
       // col 2 is day high
-      CurrencyConversions::removeCommasfromCurrency(token);
-      parsed_tick.high = std::stold(token);
-
+      CurrencyConversions::removeCommasFromCurrency(token);
+      parsed_tick.high = stold(token);
     } else if (col == 3) {
       // col 3 is day Low
-      CurrencyConversions::removeCommasfromCurrency(token);
-      parsed_tick.low = std::stold(token);
-
+      CurrencyConversions::removeCommasFromCurrency(token);
+      parsed_tick.low = stold(token);
     } else if (col == 4) {
       // col 4 is day Close
-      CurrencyConversions::removeCommasfromCurrency(token);
-      parsed_tick.close = std::stold(token);
-
+      CurrencyConversions::removeCommasFromCurrency(token);
+      parsed_tick.close = stold(token);
     } else if (col == 5) {
       // col 5 is Adj Close
-      CurrencyConversions::removeCommasfromCurrency(token);
-      parsed_tick.adjust_close = std::stold(token);
-
+      CurrencyConversions::removeCommasFromCurrency(token);
+      parsed_tick.adjust_close = stold(token);
     } else {
       // col 6 is volume
-      CurrencyConversions::removeCommasfromCurrency(token);
-      parsed_tick.volume = std::stol(token);
+      CurrencyConversions::removeCommasFromCurrency(token);
+      parsed_tick.volume = stol(token);
     }
 
     col++;
@@ -107,15 +96,9 @@ Tick YahooFinanceFileTickManager::getNextTick() {
   return this->tick_store[idx];
 }
 
-Tick YahooFinanceFileTickManager::getNextTick(Tick last_tick) {
-  int idx = this->tick_counter;
-  this->tick_counter++;
-  return this->tick_store[idx];
-}
-
 bool YahooFinanceFileTickManager::hasNextTick() {
   if (this->tick_counter < this->tick_store.size())
     return true;
-  else
-    return false;
+
+  return false;
 }

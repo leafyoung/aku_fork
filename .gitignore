@@ -1,4 +1,13 @@
+# replit
+.ccls-cache/
+.cache/
+
+# build
 bin
 bin/*
 build
 build/*
+
+# bin
+main
+main-debug
