@@ -13,7 +13,8 @@ public:
   int quantity;
   Tick tick;
 
-  Trade(Trade::Move mv, int quantity, Tick tick): mv(mv), quantity(quantity), tick(tick) { }
+  Trade(Trade::Move mv, int quantity, Tick tick)
+      : mv(mv), quantity(quantity), tick(tick) {}
 
   void dump() {
     cout << "Dumping a trade sequence" << endl;
