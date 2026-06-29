@@ -1,5 +1,5 @@
-#include "../include/VirtualBank.h"
 #include <iostream>
+#include "../include/VirtualBank.h"
 
 VirtualBank::VirtualBank(REAL startingBalance) {
   this->totalBalance = startingBalance;
@@ -19,7 +19,6 @@ bool VirtualBank::bankCanDebit(REAL amount) {
 }
 
 bool VirtualBank::bankDebit(REAL amount) {
-
   if (this->totalBalance >= amount) {
     this->totalBalance -= amount;
     return true;
@@ -28,4 +27,6 @@ bool VirtualBank::bankDebit(REAL amount) {
   return false;
 }
 
-REAL VirtualBank::getBankBalance() { return this->totalBalance; }
+REAL VirtualBank::getBankBalance() {
+  return this->totalBalance;
+}

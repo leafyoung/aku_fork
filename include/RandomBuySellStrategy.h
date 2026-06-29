@@ -3,6 +3,6 @@
 #include "Strategy.h"
 
 class RandomBuySellStrategy : public Strategy {
-public:
+ public:
   Trade processTick(Tick t);
 };

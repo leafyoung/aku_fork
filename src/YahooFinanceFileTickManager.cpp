@@ -13,8 +13,7 @@ using namespace std;
 
 YahooFinanceFileTickManager::YahooFinanceFileTickManager(string file_path) {
   if (DEBUG_FLAG) {
-    cout << "Running with YahooFinanceFileTickManager as default TickManager"
-         << endl;
+    cout << "Running with YahooFinanceFileTickManager as default TickManager" << endl;
   }
   ifstream input_file(file_path);
   int first_line = 0;
@@ -51,10 +50,9 @@ Tick YahooFinanceFileTickManager::parseTickFromString(string line) {
   vector<string> tokens;
   stringstream string_stream(line);
   string token;
-  int col = 0; // will keep a check on csv columns
+  int col = 0;  // will keep a check on csv columns
 
   while (getline(string_stream, token, ',')) {
-
     if (col == 0) {
       // column 0 is date
       parsed_tick.time = parseDateFromString(token);

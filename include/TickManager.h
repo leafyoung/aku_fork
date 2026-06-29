@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Tick.h"
 #include <iostream>
+#include "Tick.h"
 
 class TickManager {
-public:
+ public:
   virtual Tick getNextTick() = 0;
   virtual bool hasNextTick() = 0;
 };

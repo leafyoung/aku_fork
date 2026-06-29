@@ -3,12 +3,8 @@
 using namespace std;
 
 int argc_new = 6;
-char *argv_new[] = {(char *)"bin/aku",
-                    (char *)"-i",
-                    (char *)"sample_inputs/MARUTI.NS.csv",
-                    (char *)"-o",
-                    (char *)"abc.csv",
-                    (char *)"-d",
+char* argv_new[] = {(char*)"bin/aku", (char*)"-i",      (char*)"sample_inputs/MARUTI.NS.csv",
+                    (char*)"-o",      (char*)"abc.csv", (char*)"-d",
                     nullptr};
 argv = argv_new;
 

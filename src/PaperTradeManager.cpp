@@ -1,10 +1,10 @@
 #include "../include/PaperTradeManager.h"
-#include "../include/Trade.h"
 #include <iostream>
+#include "../include/Trade.h"
 
 using namespace std;
 
-PaperTradeManager::PaperTradeManager(VirtualBank *v_bank) {
+PaperTradeManager::PaperTradeManager(VirtualBank* v_bank) {
   this->virtual_bank = v_bank;
   this->holdQuantity = 0;
 }
@@ -27,8 +27,7 @@ bool PaperTradeManager::canBuy(Trade trade) {
   }
 
   if (DEBUG_FLAG) {
-    cout << "Could not perform a BUY signal, probably insufficient funds!"
-         << endl;
+    cout << "Could not perform a BUY signal, probably insufficient funds!" << endl;
   }
 
   return false;
@@ -40,8 +39,7 @@ bool PaperTradeManager::canSell(Trade trade) {
   }
 
   if (DEBUG_FLAG) {
-    cout << "Could not perform a SELL signal, you cant sell what you dont have"
-         << endl;
+    cout << "Could not perform a SELL signal, you cant sell what you dont have" << endl;
   }
 
   return false;

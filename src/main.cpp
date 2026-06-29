@@ -21,30 +21,30 @@
 
 using namespace std;
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
   /* Everything related to command-line options */
   string input_file{"sample_inputs/MARUTI.NS.csv"};
-  string output_file{"output.csv"}; // path to input file
-                                    // path to output file
+  string output_file{"output.csv"};  // path to input file
+                                     // path to output file
   /* End everything related to command-line options */
 
   /* Initialise tick manager*/
-  TickManager *tick_manager;
+  TickManager* tick_manager;
   // tick_manager = new RandomTickManager();
   tick_manager = new YahooFinanceFileTickManager(input_file);
 
   /* Initialise strategy */
-  Strategy *strategy;
+  Strategy* strategy;
   // strategy = new RandomBuySellStrategy();
   strategy = new SmaStrategy();
 
   /*Initialise a virtual bank*/
-  VirtualBank *virtual_bank;
+  VirtualBank* virtual_bank;
   REAL bank_balance = 100000;
   virtual_bank = new VirtualBank(bank_balance);
 
   /* Initialise trade manager */
-  TradeManager *trade_manager;
+  TradeManager* trade_manager;
   trade_manager = new PaperTradeManager(virtual_bank);
 
   Tick last_traded_tick;
@@ -61,8 +61,7 @@ int main(int argc, char **argv) {
   trade_manager->dumpTrades();
 
   string final_bank_balance = to_string(virtual_bank->getBankBalance());
-  string profit_or_loss =
-      to_string(virtual_bank->getBankBalance() - bank_balance);
+  string profit_or_loss = to_string(virtual_bank->getBankBalance() - bank_balance);
 
   cout << "Total Bank Balance: " << final_bank_balance << endl;
   cout << "Profit or loss: " << profit_or_loss << endl;

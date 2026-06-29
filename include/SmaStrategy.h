@@ -3,7 +3,7 @@
 #include "Strategy.h"
 
 class SmaStrategy : public Strategy {
-public:
+ public:
   // vector<Tick> tickBuffer;
   bool isPosition = false;
   int tickCount;

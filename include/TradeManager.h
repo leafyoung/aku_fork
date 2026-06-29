@@ -7,7 +7,7 @@
 using namespace std;
 
 class TradeManager {
-public:
+ public:
   int quantity;
   vector<Trade> trades;
   int performTrade(Trade trade);

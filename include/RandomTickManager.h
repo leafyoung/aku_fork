@@ -1,9 +1,9 @@
 #pragma once
 
-#include "TickManager.h"
 #include <cstdlib>
 #include <iostream>
 #include <random>
+#include "TickManager.h"
 
 using namespace std;
 
@@ -20,7 +20,7 @@ class RandomTickManager : public TickManager {
   uniform_int_distribution<int> distribution_int;
   uniform_real_distribution<double> distribution_double;
 
-public:
+ public:
   RandomTickManager() : seed{43}, generator(seed) {
     cout << distribution_int(generator) << endl;
     cout << distribution_int(generator) << endl;
@@ -29,7 +29,7 @@ public:
   }
   Tick getNextTick();
 
-private:
+ private:
   int genRandomInt();
   float genRandomFloat();
 };

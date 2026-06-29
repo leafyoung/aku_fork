@@ -3,6 +3,6 @@
 #include "TradeManager.h"
 
 class Strategy {
-public:
+ public:
   virtual Trade processTick(Tick t) = 0;
 };

@@ -4,10 +4,10 @@
 #include "VirtualBank.h"
 
 class PaperTradeManager : public TradeManager {
-public:
+ public:
   int holdQuantity;
-  VirtualBank *virtual_bank;
-  PaperTradeManager(VirtualBank *virtual_bank);
+  VirtualBank* virtual_bank;
+  PaperTradeManager(VirtualBank* virtual_bank);
   void performBuy(Trade trade);
   void performSell(Trade trade);
   bool canBuy(Trade trade);

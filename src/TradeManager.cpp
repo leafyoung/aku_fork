@@ -1,6 +1,6 @@
 #include "../include/TradeManager.h"
-#include "../include/Trade.h"
 #include <iostream>
+#include "../include/Trade.h"
 
 using namespace std;
 
@@ -21,8 +21,7 @@ int TradeManager::performBuyInternal(Trade trade) {
   if (this->canBuy(trade)) {
     if (DEBUG_FLAG) {
       string trade_log = "Bought - " + to_string(trade.quantity) + " at " +
-                         to_string(trade.tick.close) + " on " +
-                         to_string(trade.tick.time);
+                         to_string(trade.tick.close) + " on " + to_string(trade.tick.time);
     }
 
     this->trades.push_back(trade);
@@ -38,8 +37,7 @@ int TradeManager::performSellInternal(Trade trade) {
   if (this->canSell(trade)) {
     if (DEBUG_FLAG) {
       string trade_log = "Sold - " + to_string(trade.quantity) + " at " +
-                         to_string(trade.tick.close) + " on " +
-                         to_string(trade.tick.time);
+                         to_string(trade.tick.close) + " on " + to_string(trade.tick.time);
     }
 
     this->trades.push_back(trade);

@@ -1,6 +1,6 @@
 #include "../include/SmaStrategy.h"
-#include "../include/Trade.h"
 #include <iostream>
+#include "../include/Trade.h"
 
 using namespace std;
 

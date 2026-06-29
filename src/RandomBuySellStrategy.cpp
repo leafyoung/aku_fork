@@ -1,15 +1,14 @@
 #include "../include/RandomBuySellStrategy.h"
-#include "Trade.h"
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
 #include <random>
+#include "Trade.h"
 
 using namespace std;
 using Move = Trade::Move;
 
 Trade RandomBuySellStrategy::processTick(Tick tick) {
-
   // static random_device rd;
   // static mt19937 mt(rd());
 

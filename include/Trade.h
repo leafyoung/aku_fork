@@ -1,20 +1,19 @@
 #pragma once
 
+#include <iostream>
 #include "Tick.h"
 #include "Trade.h"
-#include <iostream>
 
 using namespace std;
 
 class Trade {
-public:
+ public:
   enum class Move { BUY, SELL, PASS };
   Move mv;
   int quantity;
   Tick tick;
 
-  Trade(Trade::Move mv, int quantity, Tick tick)
-      : mv(mv), quantity(quantity), tick(tick) {}
+  Trade(Trade::Move mv, int quantity, Tick tick) : mv(mv), quantity(quantity), tick(tick) {}
 
   void dump() {
     cout << "Dumping a trade sequence" << endl;

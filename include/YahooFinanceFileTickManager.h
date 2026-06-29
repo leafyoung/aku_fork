@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Tick.h"
-#include "TickManager.h"
 #include <iostream>
 #include <vector>
+#include "Tick.h"
+#include "TickManager.h"
 
 using namespace std;
 
 class YahooFinanceFileTickManager : public TickManager {
-public:
+ public:
   YahooFinanceFileTickManager(string file_path);
   Tick getNextTick();
   int tick_counter;

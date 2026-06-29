@@ -3,7 +3,7 @@
 #include "common.h"
 
 class VirtualBank {
-public:
+ public:
   REAL totalBalance;
   bool bankCredit(REAL);
   bool bankDebit(REAL);
